@@ -6,8 +6,14 @@ Vue.use(Router)
 import Main from '@/pages/Main'
 import Dashboard from '@/pages/Dashboard'
 import Member from '@/pages/Member'
+import Login from '@/pages/Login'
 
-let routes = [{
+let routes = [
+  {
+    path: '/login',
+    name: '登录',
+    component: Login
+  },{
   path: '/',
   component: Main,
   hidden: true,
@@ -32,6 +38,21 @@ routes.push({
 
 const router = new Router({
   routes: routes
+})
+
+//跳转到登录页面
+router.beforeEach((to, from, next) => {
+  if (to.path.startsWith('/login')) {
+    window.localStorage.removeItem('access-user')
+    next()
+  } else {
+    let user = JSON.parse(window.localStorage.getItem('access-user'))
+    if (!user) {
+      next({path: '/login'})
+    } else {
+      next()
+    }
+  }
 })
 
 export default router
