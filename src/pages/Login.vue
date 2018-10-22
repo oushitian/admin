@@ -47,10 +47,10 @@
           if (valid) {
             this.loading = true;
             //这里得改成form数据，不然后台取不到值
-            let loginParams = qs.stringify({"username": this.account.username, "password": this.account.pwd});
+            let loginParams = qs.stringify({"userName": this.account.username, "password": this.account.pwd});
             API.login(loginParams).then(function (result) {
               that.loading = false;
-              if (result && result.id) {
+              if (result.code == 'SUCCESS') {
                 localStorage.setItem('access-user', JSON.stringify(result));
 //                that.$store.commit('SET_ROUTERS', user.permissions)
 //                that.$router.addRoutes(that.$store.getters.addRouters);
